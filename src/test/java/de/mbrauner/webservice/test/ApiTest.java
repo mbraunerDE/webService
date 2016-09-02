@@ -23,11 +23,13 @@ import de.mbrauner.webservice.Main;
  */
 public class ApiTest {
 
+	private static final int TESTPORT=12345;
+
 	private static final Thread jetty = new Thread() {
 		@Override
 		public synchronized void start() {
 			try {
-				Main.main(null);
+				Main.main(new String[]{""+TESTPORT});
 			} catch (NoClassDefFoundError e) {
 				LOG.error(e.getMessage(), e);
 				System.exit(-1);
@@ -37,7 +39,7 @@ public class ApiTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ApiTest.class);
 
-	public static final String URL = "http://localhost:" + Main.JETTYPORT+"/";
+	public static final String URL = "http://localhost:" + TESTPORT +"/";
 
 	@AfterClass
 	public static void afterClass() {

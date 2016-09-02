@@ -2,6 +2,7 @@ package de.mbrauner.webservice;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.exception;
 import static spark.Spark.staticFileLocation;
 
 public class Main {
@@ -15,7 +16,14 @@ public class Main {
 			port(JETTYPORT);
 		}
 		staticFileLocation("/public");
+get("/throwexception", (request, response) -> {
+    throw new Exception();
+});
 
+exception(Exception.class, (e, request, response) -> {
+    response.status(404);
+    response.body("Resource not found");
+});
 		get("/", (request, response) -> {
 			response.redirect("/index.html");
 			return null;
